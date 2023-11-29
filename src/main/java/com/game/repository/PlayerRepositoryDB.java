@@ -4,6 +4,7 @@ import com.game.entity.Player;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.query.NativeQuery;
@@ -56,8 +57,9 @@ public class PlayerRepositoryDB implements IPlayerRepository {
     @Override
     public int getAllCount() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Integer> query = session.createNamedQuery("Player_getSizeAllCount", Integer.class);
-            return query.uniqueResult();
+            Query<Long> query = session.createNamedQuery("Player_getSizeAllCount", Long.class);
+            long size = query.uniqueResult();
+             return (int) size;
         }
     }
 
